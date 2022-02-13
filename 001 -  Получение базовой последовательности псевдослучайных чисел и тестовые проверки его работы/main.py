@@ -11,7 +11,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 
-def math_indicators(ndarry):
+def math_indicators(ndarry: np.ndarray) -> np.ndarray:
     """ 计算并返回 ndarry
     - M（期望值 | математическое ожидание по результатам наблюдений）
     - D（方差 | эмпирическая дисперсия）
@@ -30,7 +30,7 @@ def math_indicators(ndarry):
     return np.array([M, 0.5 - M, D, 0.08333 - D])
 
 
-def autocorrelation(ndarry):
+def autocorrelation(ndarry: np.ndarray) -> np.ndarray:
     """
     计算自相关系数，并返回对应数组
     :param ndarry:要计算的数组
@@ -52,7 +52,7 @@ def autocorrelation(ndarry):
     return np.array(arr_auto)
 
 
-def plot_autocorrelation(ndarry):
+def plot_autocorrelation(ndarry: np.ndarray) -> np.ndarray:
     """
     绘制 autocorrelation ndarry 的为柱状图
     :param ndarry: 数组
