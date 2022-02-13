@@ -44,11 +44,11 @@ def autocorrelation(ndarry):
     M = ndarry.mean()  # 方差
     size = ndarry.size
     arr_auto = []
-    for f in range(size):
-        numerator = sum((ndarry[:size - f] - M) * (ndarry[f:] - M)).cumsum()  # 分子
+    for f in range(1, size):
+        numerator = sum((ndarry[:size - f] - M) * (ndarry[f:] - M))  # 分子
         arr_auto.append(numerator / denominator)
 
-    print(np.array(arr_auto))
+    # print(np.array(arr_auto))
     return np.array(arr_auto)
 
 
@@ -62,22 +62,24 @@ def plot_autocorrelation(ndarry):
         print('Array can not be empty')
         return None
 
-    x = range(ndarry.size - 1)
-    plt.figure(figsize=(40, 16), dpi=160)
-    plt.bar(x, [1, 2, 3, 5, 6, 9, 8, 8, 1])
+    x = range(ndarry.size)
+    plt.figure(figsize=(16, 8), dpi=80)
+    print(len(x))
+    print(ndarry)
+    plt.bar(x, ndarry)
 
     plt.title('Autocorrelation')
     plt.xlabel('f')
     plt.ylabel('K(f)')
-    y_ticks = np.linspace(start=-1.0, stop=1.0, num=20)
-    plt.yticks(y_ticks)
+    # y_ticks = np.linspace(start=-1.0, stop=1.0, num=20)
+    # plt.yticks(y_ticks)
     plt.grid(linestyle='--', alpha=0.5)
 
     plt.show()
 
 
 if __name__ == '__main__':
-    for n in [10, 100]:
+    for n in [10, 100, 1000, 10000]:
         random_array = np.random.uniform(low=0, high=1, size=n)
         result = math_indicators(random_array)
 
