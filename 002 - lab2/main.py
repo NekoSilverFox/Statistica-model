@@ -56,7 +56,7 @@ def binomial_distribution():
     RU：Биномиальное распределение(2.2)
     :return: None
     """
-    arr_binomial = np.random.binomial(n=10, p=0.5, size=10000)
+    arr_binomial = irandom.irnbnl(n=10, p=0.5, size=10000)
     M = arr_binomial.mean()
     D = arr_binomial.var()
 
@@ -169,19 +169,19 @@ if __name__ == '__main__':
     # uniform_distribution()
 
     # 【2.2】БИНОМИАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
-    # binomial_distribution()
+    binomial_distribution()
 
     # 【2.3.1】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 1)
-    geometric_distribution(arr_geometric=irandom.irngeo_1(p=0.5, size=10000),
-                           img_save_fold='./result/【2.3.1】Geometric distribution/')
+    # geometric_distribution(arr_geometric=irandom.irngeo_1(p=0.5, size=10000),
+    #                        img_save_fold='./result/【2.3.1】Geometric distribution/')
 
     # 【2.3.2】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 2)
-    geometric_distribution(arr_geometric=irandom.irngeo_2(p=0.5, size=10000),
-                           img_save_fold='./result/【2.3.2】Geometric distribution/')
+    # geometric_distribution(arr_geometric=irandom.irngeo_2(p=0.5, size=10000),
+    #                        img_save_fold='./result/【2.3.2】Geometric distribution/')
 
     # 【2.3.3】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 3)
-    geometric_distribution(arr_geometric=irandom.irngeo_3(p=0.5, size=10000),
-                           img_save_fold='./result/【2.3.3】Geometric distribution/')
+    # geometric_distribution(arr_geometric=irandom.irngeo_3(p=0.5, size=10000),
+    #                        img_save_fold='./result/【2.3.3】Geometric distribution/')
 
     # 【2.4.1】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 1)
     # poisson_distribution(arr_poisson=irandom.irnpoi(mu=10, size=10000),

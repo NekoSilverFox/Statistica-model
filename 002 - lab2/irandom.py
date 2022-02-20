@@ -10,6 +10,35 @@
 import numpy as np
 import math
 
+def irnbnl(n: int, p: float, size: int) -> np.ndarray:
+    """
+    二项分布
+    :param n: [0, ] int
+    :param p: [0, 1] float
+    :param size: 数组大小
+    :return: 具有二项分布的 numpy.ndarry
+    """
+    if n < 0 or p < 0 or p > 1 or size <= 0:
+        raise ValueError
+
+    arr_irnbnl = []
+
+    for i in range(size):
+        if n >= 100:
+            m = round(np.random.normal(loc=n * p, scale=math.sqrt(n * p * (1 - p)), size=1) + 0.5)
+            arr_irnbnl.append(m)
+        else:
+            i_uniform = np.random.uniform(low=0, high=1, size=1)
+            p_r = (1 - p) ** n
+            m = 0
+            while (i_uniform - p_r) >= 0:
+                i_uniform -= p_r
+                p_r *= ((p * (n - m)) / ((m + 1) * (1 - p)))
+                m += 1
+            arr_irnbnl.append(m)
+
+    return np.array(arr_irnbnl)
+
 
 def irngeo_1(p: float, size: int) -> np.ndarray:
     """
