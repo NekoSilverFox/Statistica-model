@@ -80,3 +80,33 @@ def irngeo_3(p: float, size: int) -> np.ndarray:
         arr_irngeo.append(j)
 
     return np.array(arr_irngeo)
+
+
+def irnpoi(mu: int, size: int) -> np.ndarray:
+    """
+    【2.4.1】泊松分布（算法 1）
+    :param mu: int 类型
+    :param size: 数组大小
+    :return: 具有泊松分布的 numpy.ndarry
+    """
+    if mu < 0 or size <= 0:
+        raise ValueError
+
+    arr_irnpoi = []
+
+    for i in range(size):
+        if mu < 88:
+            i_uniform = np.random.uniform(low=0, high=1)
+            p_t = math.exp(-10)
+            m = 1
+            while (i_uniform - p_t) >= 0:
+                i_uniform -= p_t
+                p_t *= (mu / m)
+                m += 1
+            arr_irnpoi.append(m)
+        else:
+            m = np.random.normal(loc=mu, scale=mu, size=1)
+            arr_irnpoi.append(m)
+
+    return np.array(arr_irnpoi)
+

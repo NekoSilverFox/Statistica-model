@@ -96,7 +96,6 @@ def geometric_distribution(arr_geometric: np.ndarray, img_save_fold: str):
     :param img_save_fold: 图形存储的【文件夹】
     :return: None
     """
-    print(arr_geometric.max())
     M = arr_geometric.mean()
     D = arr_geometric.var()
 
@@ -114,6 +113,44 @@ def geometric_distribution(arr_geometric: np.ndarray, img_save_fold: str):
 
     cut_num = 14
     arr_pdf = st_method.get_pdf(arr_geometric, cut_num=cut_num)
+    st_method.plot_pdf(pdf_ndarry=arr_pdf,
+                       kind='plot',
+                       x_tick_min=1,
+                       x_tick_max=cut_num - 1,
+                       y_tick_min=0,
+                       y_tick_max=arr_pdf.max() + 0.1,
+                       cut_num=cut_num,
+                       save_path=img_save_fold + 'pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+
+    print('-' * 50, '\n')
+    return
+
+def poisson_distribution(arr_poisson: np.ndarray, img_save_fold: str):
+    """
+    CN：泊松分布
+    EN：Poisson distribution
+    RU：Распределение Пуассона
+    :param arr_poisson: 泊松分布的 numpy.ndarry 数组
+    :param img_save_fold: 图形存储的【文件夹】
+    :return: None
+    """
+    M = arr_poisson.mean()
+    D = arr_poisson.var()
+
+    print('>' * 50, '\n',
+          '【2.4】Распределение Пуассона:\n',
+          '\tM= ', M, '\n',
+          '\tD= ', D, '\n')
+
+    arr_cdf = st_method.get_cdf(arr_poisson)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='plot',
+                       x_tick_min=1,
+                       x_tick_max=arr_poisson.max(),
+                       save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
+
+    cut_num = 14
+    arr_pdf = st_method.get_pdf(arr_poisson, cut_num=cut_num)
     st_method.plot_pdf(pdf_ndarry=arr_pdf,
                        kind='plot',
                        x_tick_min=1,
@@ -146,5 +183,12 @@ if __name__ == '__main__':
     # geometric_distribution(arr_geometric=irandom.irngeo_3(p=0.5, size=10000),
     #                        img_save_fold='./result/【2.3.3】Geometric distribution/')
 
+    # 【2.4.1】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 1)
+    poisson_distribution(arr_poisson=irandom.irnpoi(mu=10, size=10000),
+                         img_save_fold='./result/【2.4.1】Poisson distribution/')
+
+    # 【2.4.2】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 2)
+    poisson_distribution(arr_poisson=irandom.irnpoi(mu=10, size=10000),
+                         img_save_fold='./result/【2.4.1】Poisson distribution/')
 
     pass
