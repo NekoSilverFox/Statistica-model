@@ -27,9 +27,11 @@ def uniform_distribution():
           '\tD= ', D, '\n')
 
     arr_cdf = st_method.get_cdf(arr_uniform)
-    st_method.plot_cdf(cdf_ndarry=arr_cdf, x_tick_min=1, x_tick_max=100)
-
-
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='scatter',
+                       x_tick_min=1,
+                       x_tick_max=100,
+                       save_path='./result/【2.1】Uniform distribution/cdf_' + arr_cdf.size.__str__() + '.png')
 
     cut_num = 101
     arr_pdf = st_method.get_pdf(arr_uniform, cut_num=cut_num)
@@ -63,7 +65,11 @@ def binomial_distribution():
           '\tD= ', D, '\n')
 
     arr_cdf = st_method.get_cdf(arr_uniform)
-    st_method.plot_cdf(cdf_ndarry=arr_cdf, x_tick_min=1, x_tick_max=10)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='scatter',
+                       x_tick_min=1,
+                       x_tick_max=10,
+                       save_path='./result/【2.2】Binomial distribution/cdf_' + arr_cdf.size.__str__() + '.png')
 
     cut_num = 10
     arr_pdf = st_method.get_pdf(arr_uniform, cut_num=cut_num)
@@ -74,11 +80,10 @@ def binomial_distribution():
                        y_tick_min=0,
                        y_tick_max=arr_pdf.max() + 0.1,
                        cut_num=cut_num,
-                       save_path='./result/【2.2】Binomial distribution/pdf_'+ (arr_pdf.size + 1).__str__() + '.png')
+                       save_path='./result/【2.2】Binomial distribution/pdf_' + (arr_pdf.size + 1).__str__() + '.png')
 
     print('-' * 50, '\n')
     return
-
 
 
 

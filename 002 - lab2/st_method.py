@@ -90,12 +90,13 @@ def get_cdf(ndarry: np.ndarray) -> np.ndarray:
     return np.array(arr_cdf)
 
 
-def plot_cdf(cdf_ndarry: np.ndarray, x_tick_min: int, x_tick_max: int):
+def plot_cdf(cdf_ndarry: np.ndarray, kind: str, x_tick_min: int, x_tick_max: int, save_path: str):
     """
     绘制 cdf 为散点图
+    :param cdf_ndarry:  cdf ndarry
     :param x_tick_min: x 轴坐标的最小值（应该最初数组的最小值）
     :param x_tick_max: x 轴坐标的最大值（应该最初数组的最大值）
-    :param cdf_ndarry:  cdf ndarry
+    :param save_path: 图像存储路径
     :return: None
     """
 
@@ -105,7 +106,17 @@ def plot_cdf(cdf_ndarry: np.ndarray, x_tick_min: int, x_tick_max: int):
 
     x = np.linspace(start=x_tick_min, stop=x_tick_max, num=100)
     plt.figure(figsize=(32, 16), dpi=160)
-    plt.scatter(x, cdf_ndarry, s=300)
+
+    if kind == 'plot':
+        plt.plot(x, cdf_ndarry, linewidth=5, marker='o', markersize=30)
+    elif kind == 'scatter':
+        plt.scatter(x, cdf_ndarry, s=300)
+    elif kind == 'bar':
+        plt.bar(x, cdf_ndarry)
+    else:
+        print('`kind` should be plot | scatter | bar')
+        return
+
     plt.title('Cumulative Distribution Function\n'
               'Number of sampling points=' + cdf_ndarry.size.__str__(),
               fontdict={'family': FONT, 'size': TITLE_FONT_SIZE})
@@ -115,7 +126,7 @@ def plot_cdf(cdf_ndarry: np.ndarray, x_tick_min: int, x_tick_max: int):
     plt.yticks(fontproperties=FONT, size=TICK_FONT_SIZE)
     plt.grid(linestyle='--', alpha=0.5)
 
-    plt.savefig('./result/cdf_' + cdf_ndarry.size.__str__() + '.png')
+    plt.savefig(save_path)
     plt.show()
 
 
@@ -146,14 +157,18 @@ def get_pdf(ndarry: np.ndarray, cut_num: int) -> np.ndarray:
     return np.array(arr_pdf)
 
 
-def plot_pdf(pdf_ndarry: np.ndarray, kind: str, x_tick_min: int, x_tick_max: int, y_tick_min: int, y_tick_max: int, cut_num: int, save_path: str):
+def plot_pdf(pdf_ndarry: np.ndarray, kind: str, x_tick_min: int, x_tick_max: int,
+             y_tick_min: int, y_tick_max: int, cut_num: int, save_path: str):
     """
     绘制 cdf 为图
+    :param pdf_ndarry: pdf ndarry
     :param kind: 绘制图像的类型，可以为 plot | scatter | bar
     :param x_tick_min: x 轴坐标的最小值（应该最初数组的最小值）
     :param x_tick_max: x 轴坐标的最大值（应该最初数组的最大值）
-    :param pdf_ndarry: pdf ndarry
+    :param y_tick_min: y 轴坐标的最小值（应该最初数组的最小值）
+    :param y_tick_max: y 轴坐标的最大值（应该最初数组的最大值）
     :param cut_num: 切片为几个区间
+    :param save_path: 图像存储路径
     :return: None
     """
 
