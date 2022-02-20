@@ -8,7 +8,8 @@
 # -----------------------------------------
 import st_method
 import numpy as np
-
+import irandom
+import pandas as pd
 
 def uniform_distribution():
     """
@@ -55,16 +56,16 @@ def binomial_distribution():
     RU：Биномиальное распределение(2.2)
     :return: None
     """
-    arr_uniform = np.random.binomial(n=10, p=0.5, size=10000)
-    M = arr_uniform.mean()
-    D = arr_uniform.var()
+    arr_binomial = np.random.binomial(n=10, p=0.5, size=10000)
+    M = arr_binomial.mean()
+    D = arr_binomial.var()
 
     print('>' * 50, '\n',
           'Биномиальное распределение(2.2):\n',
           '\tM= ', M, '\n',
           '\tD= ', D, '\n')
 
-    arr_cdf = st_method.get_cdf(arr_uniform)
+    arr_cdf = st_method.get_cdf(arr_binomial)
     st_method.plot_cdf(cdf_ndarry=arr_cdf,
                        kind='scatter',
                        x_tick_min=1,
@@ -72,7 +73,7 @@ def binomial_distribution():
                        save_path='./result/【2.2】Binomial distribution/cdf_' + arr_cdf.size.__str__() + '.png')
 
     cut_num = 10
-    arr_pdf = st_method.get_pdf(arr_uniform, cut_num=cut_num)
+    arr_pdf = st_method.get_pdf(arr_binomial, cut_num=cut_num)
     st_method.plot_pdf(pdf_ndarry=arr_pdf,
                        kind='plot',
                        x_tick_min=1,
@@ -86,8 +87,49 @@ def binomial_distribution():
     return
 
 
+def geometric_distribution():
+    """
+    CN：几何分布
+    EN：Geometric distribution
+    RU：Геометрическое распределение
+    :return: None
+    """
+    # arr_geometric = np.random.geometric(p=0.5, size=10000)
+    arr_geometric = irandom.irngeo_1(p=0.5, size=10000)
+    print(arr_geometric.max())
+    M = arr_geometric.mean()
+    D = arr_geometric.var()
+
+    print('>' * 50, '\n',
+          'Геометрическое распределение(2.2):\n',
+          '\tM= ', M, '\n',
+          '\tD= ', D, '\n')
+
+    arr_cdf = st_method.get_cdf(arr_geometric)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='plot',
+                       x_tick_min=1,
+                       x_tick_max=arr_geometric.max(),
+                       save_path='./result/【2.3.1】Geometric distribution/cdf_' + arr_cdf.size.__str__() + '.png')
+
+    #
+    # cut_num = 14
+    # arr_pdf = st_method.get_pdf(arr_geometric, cut_num=cut_num)
+    # st_method.plot_pdf(pdf_ndarry=arr_pdf,
+    #                    kind='plot',
+    #                    x_tick_min=1,
+    #                    x_tick_max=cut_num - 1,
+    #                    y_tick_min=0,
+    #                    y_tick_max=arr_pdf.max() + 0.1,
+    #                    cut_num=cut_num,
+    #                    save_path='./result/【2.3.1】Geometric distribution/pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+
+    print('-' * 50, '\n')
+    return
+
 
 if __name__ == '__main__':
-    uniform_distribution()
-    binomial_distribution()
+    # uniform_distribution()
+    # binomial_distribution()
+    geometric_distribution()
     pass

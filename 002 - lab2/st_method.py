@@ -71,7 +71,7 @@ def plot_autocorrelation(ndarry: np.ndarray) -> np.ndarray:
 def get_cdf(ndarry: np.ndarray) -> np.ndarray:
     """
     累积分布函数（英语：Cumulative Distribution Function、CDF），又叫分布函数，是概率密度函数的积分，能完整描述一个实随机变量X的概率分布。
-    F(x)是分布函数，F(x)的取值表示变量小于x的概率是多少。比如说F(x)=0.85，x=0.7，那么意思是随机变量小于0.7的概率为0.85
+    F(x)是分布函数，F(x)的取值表示变量小于 x 的概率是多少。比如说 F(x)=0.85，x=0.7，那么意思是随机变量小于 0.7 的概率为 0.85
 
     Ru：Эмпирическая интегральная функция распределения
     :param ndarry: 变量值数组
@@ -81,10 +81,10 @@ def get_cdf(ndarry: np.ndarray) -> np.ndarray:
         print('Array can not be empty')
         return None
 
-    arr_step = np.linspace(start=ndarry.max(), stop=ndarry.min(), num=100)
     arr_cdf = []
+    arr_step = np.linspace(start=ndarry.min(), stop=ndarry.max(), num=100)
     for i in arr_step:
-        arr_cdf.append(np.count_nonzero(ndarry > i) / ndarry.size)
+        arr_cdf.append(np.count_nonzero(ndarry < i) / ndarry.size)
 
     # print(arr_cdf)
     return np.array(arr_cdf)
@@ -94,6 +94,7 @@ def plot_cdf(cdf_ndarry: np.ndarray, kind: str, x_tick_min: int, x_tick_max: int
     """
     绘制 cdf 为散点图
     :param cdf_ndarry:  cdf ndarry
+    :param kind: 绘制图像的类型，可以为 plot | scatter | bar
     :param x_tick_min: x 轴坐标的最小值（应该最初数组的最小值）
     :param x_tick_max: x 轴坐标的最大值（应该最初数组的最大值）
     :param save_path: 图像存储路径
