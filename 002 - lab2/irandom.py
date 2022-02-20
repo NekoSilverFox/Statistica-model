@@ -8,6 +8,7 @@
 # -----------------------------------------
 
 import numpy as np
+import math
 
 
 def irngeo_1(p: float, size: int) -> np.ndarray:
@@ -61,3 +62,21 @@ def irngeo_2(p: float, size: int) -> np.ndarray:
 
     return np.array(arr_irngeo)
 
+def irngeo_3(p: float, size: int) -> np.ndarray:
+    """
+    【2.3.3】几何分布，算法 3
+    :param p: [0, 1] 的 float 类型
+    :param size: 数组大小
+    :return: 具有几何分布的 numpy.ndarry
+    """
+    if p < 0 or p > 1 or size <= 0:
+        raise ValueError
+
+    arr_irngeo = []
+
+    for i in range(size):
+        i_uniform = np.random.uniform(low=0, high=1)
+        j = round(math.log10(i_uniform) / math.log10(1 - p)) + 1
+        arr_irngeo.append(j)
+
+    return np.array(arr_irngeo)
