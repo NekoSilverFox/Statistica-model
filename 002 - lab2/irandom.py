@@ -10,6 +10,28 @@
 import numpy as np
 import math
 
+
+def irnuni(low: float, high: int, size: int) -> np.ndarray:
+    """
+    标准分布
+    :param low: 最小值
+    :param high: 最大值
+    :param size: 数组大小
+    :return: 具有标准分布的 numpy.ndarry
+    """
+    if low < 0 or high < 0 or low > high or size <= 0:
+        raise ValueError
+
+    arr_irnuni = []
+
+    for i in range(size):
+        i_uniform = np.random.uniform(low=0, high=1, size=1)
+        var = np.round((high - low + 1) * i_uniform + low)
+        arr_irnuni.append(var)
+
+    return np.array(arr_irnuni)
+
+
 def irnbnl(n: int, p: float, size: int) -> np.ndarray:
     """
     二项分布
@@ -90,6 +112,7 @@ def irngeo_2(p: float, size: int) -> np.ndarray:
         arr_irngeo.append(j + 1)
 
     return np.array(arr_irngeo)
+
 
 def irngeo_3(p: float, size: int) -> np.ndarray:
     """
