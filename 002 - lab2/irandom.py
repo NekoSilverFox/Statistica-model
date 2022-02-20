@@ -110,3 +110,31 @@ def irnpoi(mu: int, size: int) -> np.ndarray:
 
     return np.array(arr_irnpoi)
 
+
+def irnpsn(mu: int, size: int) -> np.ndarray:
+    """
+    【2.4.1】泊松分布（算法 1）
+    :param mu: int 类型
+    :param size: 数组大小
+    :return: 具有泊松分布的 numpy.ndarry
+    """
+    if mu < 0 or size <= 0:
+        raise ValueError
+
+    arr_irnpsn = []
+
+    for i in range(size):
+        if mu < 88:
+            i_uniform = np.random.uniform(low=0, high=1)
+            p_t = i_uniform
+            m = 1
+            while p_t >= math.exp(-mu):
+                i_uniform = np.random.uniform(low=0, high=1)
+                p_t *= i_uniform
+                m += 1
+            arr_irnpsn.append(m)
+        else:
+            m = np.random.normal(loc=mu, scale=mu, size=1)
+            arr_irnpsn.append(m)
+
+    return np.array(arr_irnpsn)
