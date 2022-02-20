@@ -9,7 +9,7 @@
 import st_method
 import numpy as np
 import irandom
-import pandas as pd
+
 
 def uniform_distribution():
     """
@@ -23,7 +23,7 @@ def uniform_distribution():
     D = arr_uniform.var()
 
     print('>' * 50, '\n',
-          'Равномерное распределение:\n',
+          '【2.1】Равномерное распределение:\n',
           '\tM= ', M, '\n',
           '\tD= ', D, '\n')
 
@@ -61,13 +61,13 @@ def binomial_distribution():
     D = arr_binomial.var()
 
     print('>' * 50, '\n',
-          'Биномиальное распределение(2.2):\n',
+          '【2.2】Биномиальное распределение:\n',
           '\tM= ', M, '\n',
           '\tD= ', D, '\n')
 
     arr_cdf = st_method.get_cdf(arr_binomial)
     st_method.plot_cdf(cdf_ndarry=arr_cdf,
-                       kind='scatter',
+                       kind='plot',
                        x_tick_min=1,
                        x_tick_max=10,
                        save_path='./result/【2.2】Binomial distribution/cdf_' + arr_cdf.size.__str__() + '.png')
@@ -87,21 +87,21 @@ def binomial_distribution():
     return
 
 
-def geometric_distribution():
+def geometric_distribution(arr_geometric: np.ndarray, img_save_fold: str):
     """
     CN：几何分布
     EN：Geometric distribution
     RU：Геометрическое распределение
+    :param arr_geometric: 具有几何分布的 numpy.ndarry
+    :param img_save_fold: 图形存储的【文件夹】
     :return: None
     """
-    # arr_geometric = np.random.geometric(p=0.5, size=10000)
-    arr_geometric = irandom.irngeo_1(p=0.5, size=10000)
     print(arr_geometric.max())
     M = arr_geometric.mean()
     D = arr_geometric.var()
 
     print('>' * 50, '\n',
-          'Геометрическое распределение(2.2):\n',
+          '【2.3】Геометрическое распределение:\n',
           '\tM= ', M, '\n',
           '\tD= ', D, '\n')
 
@@ -110,26 +110,36 @@ def geometric_distribution():
                        kind='plot',
                        x_tick_min=1,
                        x_tick_max=arr_geometric.max(),
-                       save_path='./result/【2.3.1】Geometric distribution/cdf_' + arr_cdf.size.__str__() + '.png')
+                       save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
 
-    #
-    # cut_num = 14
-    # arr_pdf = st_method.get_pdf(arr_geometric, cut_num=cut_num)
-    # st_method.plot_pdf(pdf_ndarry=arr_pdf,
-    #                    kind='plot',
-    #                    x_tick_min=1,
-    #                    x_tick_max=cut_num - 1,
-    #                    y_tick_min=0,
-    #                    y_tick_max=arr_pdf.max() + 0.1,
-    #                    cut_num=cut_num,
-    #                    save_path='./result/【2.3.1】Geometric distribution/pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+    cut_num = 14
+    arr_pdf = st_method.get_pdf(arr_geometric, cut_num=cut_num)
+    st_method.plot_pdf(pdf_ndarry=arr_pdf,
+                       kind='plot',
+                       x_tick_min=1,
+                       x_tick_max=cut_num - 1,
+                       y_tick_min=0,
+                       y_tick_max=arr_pdf.max() + 0.1,
+                       cut_num=cut_num,
+                       save_path=img_save_fold + 'pdf_' + (arr_pdf.size + 1).__str__() + '.png')
 
     print('-' * 50, '\n')
     return
 
 
 if __name__ == '__main__':
-    # uniform_distribution()
-    # binomial_distribution()
-    geometric_distribution()
+    # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
+    uniform_distribution()
+
+    # 【2.2】БИНОМИАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
+    binomial_distribution()
+
+    # 【2.3.1】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 1)
+    geometric_distribution(arr_geometric=irandom.irngeo_1(p=0.5, size=10000),
+                           img_save_fold='./result/【2.3.1】Geometric distribution/')
+
+    # 【2.3.2】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 2)
+
+    # 【2.3.3】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 3)
+
     pass
