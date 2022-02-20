@@ -58,7 +58,7 @@ def irngeo_2(p: float, size: int) -> np.ndarray:
             i_uniform = np.random.uniform(low=0, high=1)
             j += 1
 
-        arr_irngeo.append(j)
+        arr_irngeo.append(j + 1)
 
     return np.array(arr_irngeo)
 
