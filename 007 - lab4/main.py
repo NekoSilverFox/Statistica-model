@@ -22,7 +22,7 @@ def func(x):
 
 
 def work(L):
-    N = 53562
+    N = 3301299
     m = 3
     lambdaF = [40 * pow(10, -6),
                10 * pow(10, -6),
