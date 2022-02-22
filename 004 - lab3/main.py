@@ -49,12 +49,6 @@ def uniform_distribution():
     return
 
 
-
-
-
-
-
-
 def binomial_distribution():
     """
     CN：二项式分布
@@ -171,10 +165,55 @@ def poisson_distribution(arr_poisson: np.ndarray, img_save_fold: str):
     return
 
 
+def normal_distribution(arr_normal: np.ndarray, img_save_fold: str):
+    """
+    CN：正态分布
+    EN：Normal distribution
+    RU：Нормальное распределение
+    :param arr_normal: 具有正态分布的 numpy.ndarry
+    :param img_save_fold: 图形存储的【文件夹】
+    :return: None
+    """
+    M = arr_normal.mean()
+    D = arr_normal.var()
+
+    print('>' * 50, '\n',
+          '【2.2】Нормальное распределение:\n',
+          '\tM= ', M, '\n',
+          '\tD= ', D, '\n')
+
+    arr_cdf = st_method.get_cdf(arr_normal)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='plot',
+                       x_tick_min=1,
+                       x_tick_max=arr_normal.max(),
+                       save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
+
+    cut_num = 21
+    arr_pdf = st_method.get_pdf(arr_normal, cut_num=cut_num)
+    st_method.plot_pdf(pdf_ndarry=arr_pdf,
+                       kind='plot',
+                       x_tick_min=arr_normal.min(),
+                       x_tick_max=arr_normal.max(),
+                       y_tick_min=0,
+                       y_tick_max=arr_pdf.max() + 0.1,
+                       cut_num=cut_num,
+                       save_path=img_save_fold + 'pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+
+    print('-' * 50, '\n')
+    return
+
+
+
 if __name__ == '__main__':
     # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
     # uniform_distribution()
 
+    # 【2.2.1】Нормальное распределение
+    normal_distribution(irandom.irnnrm_1(size=10000), './result/【2.2.1】Нормальное распределение/')
+    # normal_distribution(np.random.standard_normal(size=10000), './result/【2.2.1】Нормальное распределение/')
 
+    # 【2.2.2】Нормальное распределение
+    # normal_distribution(irandom.irnnrm_1(size=10000), './result/【2.2.2】Нормальное распределение/')
 
     pass

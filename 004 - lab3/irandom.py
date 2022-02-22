@@ -208,7 +208,7 @@ def irnnrm_1(size: int) -> np.ndarray:
 
     for i in range(size):
         arr_uniform = np.random.uniform(low=0, high=1, size=2)
-        var = math.sqrt(-2 * math.log10(arr_uniform[0])) * math.cos(2 * math.pi * arr_uniform[1])
+        var = math.sqrt(-2 * math.log(arr_uniform[0])) * math.cos(2 * math.pi * arr_uniform[1])
         arr_irnnrm.append(var)
 
     return np.array(arr_irnnrm)
