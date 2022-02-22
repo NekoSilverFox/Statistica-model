@@ -128,7 +128,7 @@ def irngeo_3(p: float, size: int) -> np.ndarray:
 
     for i in range(size):
         i_uniform = np.random.uniform(low=0, high=1)
-        j = round(math.log10(i_uniform) / math.log10(1 - p)) + 1
+        j = round(math.log(i_uniform) / math.log(1 - p)) + 1
         arr_irngeo.append(j)
 
     return np.array(arr_irngeo)
