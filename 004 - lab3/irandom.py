@@ -258,11 +258,11 @@ def irnexp(beta: int, size: int) -> np.ndarray:
 
 def irnchis(n: int, size: int) -> np.ndarray:
     """
-    CN：智平方分布
+    CN：智平方分布（卡方分布）
     RU：Хи-Квадрат Распределение
     :param n: int 类型的参数（指数）
     :param size: 数组大小（随机数数量）
-    :return: 具有智平方分布的 numpy.ndarry
+    :return: 具有卡方分布的 numpy.ndarry
     """
     if size <= 0:
         raise ValueError
@@ -270,11 +270,12 @@ def irnchis(n: int, size: int) -> np.ndarray:
     arr_irnchis = []
 
     for i in range(size):
-        fl_num = 0.0
+        fl_arr = np.array(0.0)
         for j in range(n):
-            fl_num = np.array([fl_num, irnnrm_1(1)[0]])
+            fl_arr = np.hstack([fl_arr, np.array(irnnrm_1(size=1)[0])])
 
-        var = (fl_num ** 2).sum()
+        var = (fl_arr ** 2).sum()
+        # print(var)
         arr_irnchis.append(var)
 
     return np.array(arr_irnchis)

@@ -224,7 +224,7 @@ def exponential_distribution(arr_exp: np.ndarray, img_save_fold: str):
     arr_cdf = st_method.get_cdf(arr_exp)
     st_method.plot_cdf(cdf_ndarry=arr_cdf,
                        kind='plot',
-                       x_tick_min=1,
+                       x_tick_min=0,
                        x_tick_max=arr_exp.max(),
                        save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
 
@@ -242,6 +242,46 @@ def exponential_distribution(arr_exp: np.ndarray, img_save_fold: str):
     print('-' * 50, '\n')
     return
 
+
+def chi_square_distribution(arr_exp: np.ndarray, img_save_fold: str):
+    """
+    CN：卡方分布
+    EN：chi-square distribution
+    RU：Хи-Квадрат Распределение
+    :param arr_exp: 具有卡方态分布的 numpy.ndarry
+    :param img_save_fold: 图形存储的【文件夹】
+    :return: None
+    """
+    M = arr_exp.mean()
+    D = arr_exp.var()
+
+    print('>' * 50, '\n',
+          '【2.4】Хи-Квадрат Распределение:\n',
+          '\tM= ', M, '\n',
+          '\tD= ', D, '\n')
+
+    arr_cdf = st_method.get_cdf(arr_exp)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='plot',
+                       x_tick_min=0,
+                       x_tick_max=arr_exp.max(),
+                       save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
+
+    cut_num = 21
+    arr_pdf = st_method.get_pdf(arr_exp, cut_num=cut_num)
+    st_method.plot_pdf(pdf_ndarry=arr_pdf,
+                       kind='plot',
+                       x_tick_min=arr_exp.min(),
+                       x_tick_max=arr_exp.max(),
+                       y_tick_min=0,
+                       y_tick_max=arr_pdf.max() + 0.1,
+                       cut_num=cut_num,
+                       save_path=img_save_fold + 'pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+
+    print('-' * 50, '\n')
+    return
+
+
 if __name__ == '__main__':
     # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
     # uniform_distribution()
@@ -253,6 +293,8 @@ if __name__ == '__main__':
     # normal_distribution(irandom.irnnrm_1(size=10000), './result/【2.2.2】Нормальное распределение/')
 
     # 【2.3】Экспоненциальное распределение
-    exponential_distribution(irandom.irnexp(beta=1, size=10000), './result/【2.3】Экспоненциальное распределение/')
+    # exponential_distribution(irandom.irnexp(beta=1, size=10000), './result/【2.3】Экспоненциальное распределение/')
 
+    # 【2.4】Хи-Квадрат Распределение
+    chi_square_distribution(irandom.irnchis(n=10, size=10000), './result/【2.4】Хи-Квадрат Распределение/')
     pass
