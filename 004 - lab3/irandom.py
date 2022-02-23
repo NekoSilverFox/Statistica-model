@@ -279,3 +279,25 @@ def irnchis(n: int, size: int) -> np.ndarray:
         arr_irnchis.append(var)
 
     return np.array(arr_irnchis)
+
+
+def irnstud(n: int, size: int) -> np.ndarray:
+    """
+    CN：学生t-分布
+    RU：Распределение Стьюдента
+    :param n: int 类型的参数（指数）
+    :param size: 数组大小（随机数数量）
+    :return: 具有学生t-分布的 numpy.ndarry
+    """
+    if size <= 0:
+        raise ValueError
+
+    arr_irnstud = []
+
+    for i in range(size):
+        i_uniform = irnnrm_1(size=1)[0]
+        i_hit = irnchis(n, size=1)[0]
+        var = i_uniform / math.sqrt(i_hit / n)
+        arr_irnstud.append(var)
+
+    return np.array(arr_irnstud)
