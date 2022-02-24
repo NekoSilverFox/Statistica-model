@@ -10,6 +10,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import chi2_contingency
+from scipy.stats import chisquare
 from scipy.stats import chi2
 import math
 
@@ -86,7 +87,7 @@ def plot_poisson_hist(arr_poisson: np.ndarray, save_path: str):
     :return:
     """
     plt.figure(figsize=(18, 10), dpi=100)
-    plt.hist(x=arr_poisson, bins=(arr_poisson.max() - arr_poisson.min()), density=True)
+    plt.hist(x=arr_poisson, bins=10, density=True)
     plt.grid(linestyle='--', alpha=0.5)
     plt.title('Закон Пуассона \n'
               'λ=4 size=100',
@@ -100,68 +101,27 @@ def plot_poisson_hist(arr_poisson: np.ndarray, save_path: str):
     plt.show()
 
 
-def chi2_independence(data: np.ndarray, alpha: float):
-    """
-    критерием Пирсона
-    假设检验重要知识
-    H0:A与B相互独立
-    H1：A与B不相互独立
-    若卡方值大于临界值，拒绝原假设，表示A与B不相互独立，A与B相关
-    函数中re返回为1表示拒绝原假设，0表示接受原假设
-
-    :param alpha: 置信度，用来确定临界值（уровнем значимости）
-    :param data: 数据，请使用 numpy.array 数组
-    :return:
-        chi_2 : 卡方值，也就是统计量
-        p     : P值（统计学名词），与置信度对比，也可进行假设检验，P值小于置信度，即可拒绝原假设
-        dof   : 自由度
-        re    : 判读变量，1表示拒绝原假设，0表示接受原假设
-        expctd: 原数据数组同维度的对应理论值
-    """
-    chi_2, p, dof, expctd = chi2_contingency(data)
-
-    cv = 0
-    if dof == 0:
-        print('自由度应该大于等于1')
-    elif dof == 1:
-        cv = chi2.isf(alpha * 0.5, dof)
-    else:
-        cv = chi2.isf(alpha * 0.5, dof-1)
-
-    if chi_2 > cv:
-        re = 1  # 表示拒绝原假设
-    else:
-        re = 0  # 表示接受原假设
-
-    return chi_2, p, dof, re, expctd
-
-
 if __name__ == '__main__':
+
     print('>' * 50, '\nirnpoi(mu=4, size=100):')
     arr_poi = irnpoi(mu=4, size=100)
-    print('\tmin: ', arr_poi.min(), '\n\tmax: ', arr_poi.max(), '\n')
+    print('\tmin: ', arr_poi.min(), '\n\tmax: ', arr_poi.max())
 
-    chi_2, p, dof, re, expctd = chi2_independence(alpha=0.05, data=[arr_poi, arr_poi])
-    print('【chi_2】卡方值：', chi_2, '\n',
-          '【p】P 值：', p, '\n',
-          '【dof】自由度：', dof, '\n',
-          '【re】判读变量：', re, '\n',
-          '【expctd】理论值：', expctd, '\n')
+    chi_2 = chisquare(arr_poi)
+    print('chi_2: ', chi_2[0])
+
     plot_poisson_hist(arr_poisson=arr_poi,
                       save_path='./result/1_irnpoi.png')
 
     ############################################################################
-    # print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
-    # arr_psn = irnpsn(mu=4, size=100)
-    # print('\tmin: ', arr_psn.min(), '\n\tmax: ', arr_psn.max())
-    #
-    # chi_2, p, dof, re, expctd = chi2_independence(alpha=0.05, data=arr_psn)
-    # print('【chi_2】卡方值：', chi_2, '\n',
-    #       '【p】P 值：', p, '\n',
-    #       '【dof】自由度：', dof, '\n',
-    #       '【re】判读变量：', re, '\n',
-    #       '【expctd】理论值：', expctd, '\n')
-    # plot_poisson_hist(arr_poisson=arr_psn,
-    #                   save_path='./result/2_irnpsn.png')
+    print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
+    arr_psn = irnpsn(mu=4, size=100)
+    print('\tmin: ', arr_psn.min(), '\n\tmax: ', arr_psn.max())
+
+    chi_2 = chisquare(arr_psn)
+    print('chi_2: ', chi_2[0])
+
+    plot_poisson_hist(arr_poisson=arr_psn,
+                      save_path='./result/2_irnpsn.png')
 
     pass
