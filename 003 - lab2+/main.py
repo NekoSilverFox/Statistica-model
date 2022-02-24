@@ -9,9 +9,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import chi2_contingency
 from scipy.stats import chisquare
-from scipy.stats import chi2
 import math
 
 
