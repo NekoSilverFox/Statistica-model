@@ -150,7 +150,7 @@ def irnpoi(mu: int, size: int) -> np.ndarray:
     for i in range(size):
         if mu < 88:
             i_uniform = np.random.uniform(low=0, high=1)
-            p_t = math.exp(-10)
+            p_t = math.exp(-mu)
             m = 1
             while (i_uniform - p_t) >= 0:
                 i_uniform -= p_t
