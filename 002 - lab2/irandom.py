@@ -155,7 +155,7 @@ def irnpoi(mu: int, size: int) -> np.ndarray:
                 i_uniform -= p_t
                 p_t *= (mu / m)
                 m += 1
-            arr_irnpoi.append(m)
+            arr_irnpoi.append(m - 1)
         else:
             m = np.random.normal(loc=mu, scale=mu, size=1)
             arr_irnpoi.append(m)
@@ -165,7 +165,7 @@ def irnpoi(mu: int, size: int) -> np.ndarray:
 
 def irnpsn(mu: int, size: int) -> np.ndarray:
     """
-    【2.4.1】泊松分布（算法 1）
+    【2.4.2】泊松分布（算法 2）
     :param mu: int 类型
     :param size: 数组大小
     :return: 具有泊松分布的 numpy.ndarry
@@ -184,7 +184,7 @@ def irnpsn(mu: int, size: int) -> np.ndarray:
                 i_uniform = np.random.uniform(low=0, high=1)
                 p_t *= i_uniform
                 m += 1
-            arr_irnpsn.append(m)
+            arr_irnpsn.append(m - 1)
         else:
             m = np.random.normal(loc=mu, scale=mu, size=1)
             arr_irnpsn.append(m)
