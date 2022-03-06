@@ -10,9 +10,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.stats import chisquare
-from scipy import stats
-import st_method
+import scipy.stats
 import math
 
 
@@ -72,7 +70,7 @@ def irnpsn(mu: int, size: int) -> np.ndarray:
                 i_uniform = np.random.uniform(low=0, high=1)
                 p_t *= i_uniform
                 m += 1
-            arr_irnpsn.append(m)
+            arr_irnpsn.append(m - 1)
         else:
             m = np.random.normal(loc=mu, scale=mu, size=1)
             arr_irnpsn.append(m)
@@ -80,21 +78,52 @@ def irnpsn(mu: int, size: int) -> np.ndarray:
     return np.array(arr_irnpsn)
 
 
-def get_arr_exp_hist_poisson(mu: int, skip: int, size: int) -> np.ndarray:
+def get_poisson_chi_square(arr_source: np.ndarray, source_mu: int) -> int:
     """
-    生成标准泊松分布的数组
+    数组相对于标准泊松分布的卡方值
+    :param source_mu: 参数泊松分布数组的 mu
+    :param arr_source: 泊松分布数组
+    :return: 相对于泊松分布的卡方值
+    """
+    if arr_source is None:
+        raise ValueError
+
+    N = arr_source.size  # 元素数量
+    n = arr_source.max() - arr_source.min()  # 分的区间数
+    chi_square = 0  # 卡方值
+    arr_p_exp = get_arr_exp_hist_poisson(mu=source_mu, skip=n)
+    arr_p_obs = get_hist_arr(arr=arr_source, arr_cut_value=n) / N
+
+    for k in range(n):
+        chi_square += (arr_p_obs[k] - arr_p_exp[k]) ** 2 / arr_p_exp[k]
+
+    chi_square *= N
+
+    print('原数组:', arr_source, ' (Min:', arr_source.min(), ' Max:', arr_source.max(), ')')
+    print('元素数量 N:', N)
+    print('区间数 n:', n)
+    print('标准泊松频率数组:', arr_p_exp, ' shape:', arr_p_exp.shape, 'p_sum:', arr_p_exp.sum())
+    print('随机泊松频率数组:', arr_p_obs, ' shape:', arr_p_obs.shape, 'p_sum:', arr_p_obs.sum())
+    print('[EXP] Chi-square:', chi_square)
+    print('[OBS] Chi-square:', scipy.stats.chi2.isf(q=0.05, df=n - 1))
+
+    return chi_square
+
+
+def get_arr_exp_hist_poisson(mu: int, skip: int) -> np.ndarray:
+    """
+    生成标准泊松分布频率的数组
     :param skip: 分割为几个区间
     :param mu: 参数 int 类型
-    :param size: 数组大小
     :return: ndarry 类型的数组
     """
-    if mu < 0 or size < 0 or skip < 0:
+    if mu < 0 or skip < 0:
         raise ValueError
 
     arr_poisson = []
     for k in range(skip):
         val = ((math.e ** -mu) * (mu ** k)) / math.factorial(k)
-        arr_poisson.append(int(val * size))
+        arr_poisson.append(val)
 
     return np.array(arr_poisson)
 
@@ -123,7 +152,7 @@ def plot_poisson_hist(arr_poisson: np.ndarray, save_path: str):
     plt.hist(x=arr_poisson, bins=10, density=True)
     plt.grid(linestyle='--', alpha=0.5)
     plt.title('Закон Пуассона \n'
-              'λ=4 Size=100 Section=10',
+              'λ=4 Size=100 Section=' + arr_poisson.max().__str__(),
               fontdict={'family': FONT, 'size': TITLE_FONT_SIZE})
     plt.xlabel('x', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
     plt.ylabel('P(x)', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
@@ -135,39 +164,20 @@ def plot_poisson_hist(arr_poisson: np.ndarray, save_path: str):
 
 
 if __name__ == '__main__':
-    arr_cut_value = np.array(range(-1, 16))  # [0, 16)
+    print('>' * 50, '\nirnpoi(mu=4, size=100):')
+    arr_poi = irnpoi(mu=4, size=100)
+    chi_square = get_poisson_chi_square(arr_source=arr_poi, source_mu=4)
+    plot_poisson_hist(arr_poisson=arr_poi,
+                      save_path='./result/1_irnpoi.png')
+    print('-' * 50)
 
-    ############################################################################
+    #############################################################################
 
-    print('>' * 50, '\nnumpy 标准泊松分布：')
-    arr_exp_hist_poisson = get_arr_exp_hist_poisson(mu=4, skip=15, size=100)
-    print('\t分布数量：', arr_exp_hist_poisson)
-    print('-' * 50, '\n')
-
-    ############################################################################
-    #
-    # print('>' * 50, '\nirnpoi(mu=4, size=100):')
-    # arr_poi = irnpoi(mu=4, size=100)
-    # print('\tmin: ', arr_poi.min(), '\n\tmax: ', arr_poi.max())
-    # plot_poisson_hist(arr_poisson=arr_poi,
-    #                   save_path='./result/1_irnpoi.png')
-    #
-    # arr_obs_poi_hist = get_hist_arr(arr=arr_poi, arr_cut_value=arr_cut_value)
-    # print('\t分布数量：', arr_obs_poi_hist)
-    # chi_2 = chisquare(f_obs=arr_obs_poi_hist + 0.05, f_exp=arr_exp_hist + 0.05)
-    # print('chi_2: ', chi_2)
-    # #
-    # # ############################################################################
-    #
-    # print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
-    # arr_psn = irnpsn(mu=4, size=100)
-    # print('\tmin: ', arr_psn.min(), '\n\tmax: ', arr_psn.max())
-    # plot_poisson_hist(arr_poisson=arr_psn,
-    #                   save_path='./result/2_irnpsn.png')
-    #
-    # arr_obs_psn_hist = get_hist_arr(arr=arr_psn, arr_cut_value=arr_cut_value)
-    # print('\t分布数量：', arr_obs_psn_hist)
-    # chi_2 = chisquare(f_obs=arr_obs_psn_hist + 0.05, f_exp=arr_exp_hist + 0.05)
-    # print('chi_2: ', chi_2)
+    print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
+    arr_psn = irnpsn(mu=4, size=100)
+    chi_square = get_poisson_chi_square(arr_source=arr_psn, source_mu=4)
+    plot_poisson_hist(arr_poisson=arr_psn,
+                      save_path='./result/2_irnpsn.png')
+    print('-' * 50)
 
     pass
