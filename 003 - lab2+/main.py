@@ -164,9 +164,10 @@ def plot_poisson_hist(arr_poisson: np.ndarray, save_path: str):
 
 
 if __name__ == '__main__':
+
     print('>' * 50, '\nirnpoi(mu=4, size=100):')
     arr_poi = irnpoi(mu=4, size=100)
-    chi_square = get_poisson_chi_square(arr_source=arr_poi, source_mu=4)
+    chi_square_poi = get_poisson_chi_square(arr_source=arr_poi, source_mu=4)
     plot_poisson_hist(arr_poisson=arr_poi,
                       save_path='./result/1_irnpoi.png')
     print('-' * 50)
@@ -175,9 +176,9 @@ if __name__ == '__main__':
 
     print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
     arr_psn = irnpsn(mu=4, size=100)
-    chi_square = get_poisson_chi_square(arr_source=arr_psn, source_mu=4)
+    chi_square_psn = get_poisson_chi_square(arr_source=arr_psn, source_mu=4)
+    print('-' * 50)
     plot_poisson_hist(arr_poisson=arr_psn,
                       save_path='./result/2_irnpsn.png')
-    print('-' * 50)
 
     pass
