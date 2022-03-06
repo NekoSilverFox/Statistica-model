@@ -80,6 +80,25 @@ def irnpsn(mu: int, size: int) -> np.ndarray:
     return np.array(arr_irnpsn)
 
 
+def get_arr_exp_hist_poisson(mu: int, skip: int, size: int) -> np.ndarray:
+    """
+    生成标准泊松分布的数组
+    :param skip: 分割为几个区间
+    :param mu: 参数 int 类型
+    :param size: 数组大小
+    :return: ndarry 类型的数组
+    """
+    if mu < 0 or size < 0 or skip < 0:
+        raise ValueError
+
+    arr_poisson = []
+    for k in range(skip):
+        val = ((math.e ** -mu) * (mu ** k)) / math.factorial(k)
+        arr_poisson.append(int(val * size))
+
+    return np.array(arr_poisson)
+
+
 def get_hist_arr(arr: np.ndarray, arr_cut_value: np.ndarray) -> np.ndarray:
     """
     根据传入的数值数组进行分隔并统计分布数量
@@ -121,10 +140,8 @@ if __name__ == '__main__':
     ############################################################################
 
     print('>' * 50, '\nnumpy 标准泊松分布：')
-    arr_exp_poisson = np.random.poisson(lam=4, size=1000000)
-    pd.Series(arr_exp_poisson).sort_values().plot(kind='hist')
-    arr_exp_hist = get_hist_arr(arr=arr_exp_poisson, arr_cut_value=arr_cut_value)  # [0, 16)
-    print('\t分布数量：', arr_exp_hist)
+    arr_exp_hist_poisson = get_arr_exp_hist_poisson(mu=4, skip=15, size=100)
+    print('\t分布数量：', arr_exp_hist_poisson)
     print('-' * 50, '\n')
 
     ############################################################################
@@ -139,8 +156,8 @@ if __name__ == '__main__':
     # print('\t分布数量：', arr_obs_poi_hist)
     # chi_2 = chisquare(f_obs=arr_obs_poi_hist + 0.05, f_exp=arr_exp_hist + 0.05)
     # print('chi_2: ', chi_2)
-    #
-    # ############################################################################
+    # #
+    # # ############################################################################
     #
     # print('\n\n', '>' * 50, '\nirnpoi(mu=4, size=100):')
     # arr_psn = irnpsn(mu=4, size=100)
