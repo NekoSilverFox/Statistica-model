@@ -166,30 +166,30 @@ def poisson_distribution(arr_poisson: np.ndarray, img_save_fold: str):
 
 
 if __name__ == '__main__':
-    # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
-    uniform_distribution()
-
-    # 【2.2】БИНОМИАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
-    binomial_distribution()
-
-    # 【2.3.1】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 1)
-    geometric_distribution(arr_geometric=irandom.irngeo_1(p=0.5, size=10000),
-                           img_save_fold='./result/【2.3.1】Geometric distribution/')
-
-    # 【2.3.2】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 2)
-    geometric_distribution(arr_geometric=irandom.irngeo_2(p=0.5, size=10000),
-                           img_save_fold='./result/【2.3.2】Geometric distribution/')
-
+    # # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
+    # uniform_distribution()
+    #
+    # # 【2.2】БИНОМИАЛЬНОЕ РАСПРЕДЕЛЕНИЕ
+    # binomial_distribution()
+    #
+    # # 【2.3.1】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 1)
+    # geometric_distribution(arr_geometric=irandom.irngeo_1(p=0.5, size=10000),
+    #                        img_save_fold='./result/【2.3.1】Geometric distribution/')
+    #
+    # # 【2.3.2】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 2)
+    # geometric_distribution(arr_geometric=irandom.irngeo_2(p=0.5, size=10000),
+    #                        img_save_fold='./result/【2.3.2】Geometric distribution/')
+    #
     # 【2.3.3】ГЕОМЕТРИЧЕСКОЕ РАСПРЕДЕЛЕНИЕ (Алгоритм 3)
     geometric_distribution(arr_geometric=irandom.irngeo_3(p=0.5, size=10000),
                            img_save_fold='./result/【2.3.3】Geometric distribution/')
-
-    # 【2.4.1】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 1)
-    poisson_distribution(arr_poisson=irandom.irnpoi(mu=10, size=10000),
-                         img_save_fold='./result/【2.4.1】Poisson distribution/')
-
-    # 【2.4.2】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 2)
-    poisson_distribution(arr_poisson=irandom.irnpsn(mu=10, size=10000),
-                         img_save_fold='./result/【2.4.2】Poisson distribution/')
+    #
+    # # 【2.4.1】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 1)
+    # poisson_distribution(arr_poisson=irandom.irnpoi(mu=10, size=10000),
+    #                      img_save_fold='./result/【2.4.1】Poisson distribution/')
+    #
+    # # 【2.4.2】РАСПРЕДЕЛЕНИЕ ПУАССОНА (Алгоритм 2)
+    # poisson_distribution(arr_poisson=irandom.irnpsn(mu=10, size=10000),
+    #                      img_save_fold='./result/【2.4.2】Poisson distribution/')
 
     pass
