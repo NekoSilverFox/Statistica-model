@@ -9,7 +9,14 @@
 import st_method
 import numpy as np
 import irandom
+import matplotlib.pyplot as plt
 
+from scipy.stats import weibull_min
+
+TITLE_FONT_SIZE = 36
+LABEL_FONT_SIZE = 36
+TICK_FONT_SIZE = 32
+FONT = 'Times New Roman'
 
 def uniform_distribution():
     """
@@ -225,7 +232,8 @@ def exponential_distribution(arr_exp: np.ndarray, img_save_fold: str):
     st_method.plot_cdf(cdf_ndarry=arr_cdf,
                        kind='plot',
                        x_tick_min=0,
-                       x_tick_max=arr_exp.max(),
+                       # x_tick_max=arr_exp.max(),
+                       x_tick_max=5,
                        save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
 
     cut_num = 21
@@ -320,6 +328,67 @@ def student_t_distribution(arr_exp: np.ndarray, img_save_fold: str):
     print('-' * 50, '\n')
     return
 
+
+def weibull_distribution(arr_weibull: np.ndarray, img_save_fold: str):
+    """
+    CN: 韦伯分布
+    EN: Weibull distribution
+    RU: Распределение Вейбулла
+    :param arr_weibull: 具有韦伯分布的 numpy.ndarry
+    :param img_save_fold: 图形存储的【文件夹】
+    :return: None
+    """
+    M = arr_weibull.mean()
+    D = arr_weibull.var()
+
+    print('>' * 50, '\n',
+          '【2.6】Распределение Вейбулла:\n',
+          '\tM= ', M, '\n',
+          '\tD= ', D, '\n')
+
+    arr_cdf = st_method.get_cdf(arr_weibull)
+    st_method.plot_cdf(cdf_ndarry=arr_cdf,
+                       kind='plot',
+                       x_tick_min=0,
+                       x_tick_max=arr_weibull.max(),
+                       save_path=img_save_fold + 'cdf_' + arr_cdf.size.__str__() + '.png')
+
+    cut_num = 21
+    arr_pdf = st_method.get_pdf(arr_weibull, cut_num=cut_num)
+    st_method.plot_pdf(pdf_ndarry=arr_pdf,
+                       kind='plot',
+                       x_tick_min=arr_weibull.min(),
+                       x_tick_max=arr_weibull.max(),
+                       y_tick_min=0,
+                       y_tick_max=arr_pdf.max() + 0.1,
+                       cut_num=cut_num,
+                       save_path=img_save_fold + 'pdf_' + (arr_pdf.size + 1).__str__() + '.png')
+
+    print('-' * 50, '\n')
+    return
+
+
+def plot_weibull_hist(arr_weibull: np.ndarray, save_path: str):
+    """
+    绘制直方图并保存
+    :param arr_weibull: 具有韦伯分布的数组
+    :param save_path: 图像存储路径
+    :return:
+    """
+    plt.figure(figsize=(18, 10), dpi=100)
+    plt.hist(x=arr_weibull, bins=10, density=True)
+    plt.grid(linestyle='--', alpha=0.5)
+    plt.title('Распределение Вейбулла \n'
+              'Section=' + arr_weibull.max().__str__(),
+              fontdict={'family': FONT, 'size': TITLE_FONT_SIZE})
+    plt.xlabel('x', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
+    plt.ylabel('P(x)', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
+    plt.xticks(fontproperties=FONT, size=TICK_FONT_SIZE)
+    plt.yticks(fontproperties=FONT, size=TICK_FONT_SIZE)
+    # plt.xlim(0, 15)
+    plt.savefig(save_path)
+    plt.show()
+
 if __name__ == '__main__':
     # 【2.1】РАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ (дискретное)
     # uniform_distribution()
@@ -337,5 +406,14 @@ if __name__ == '__main__':
     # chi_square_distribution(irandom.irnchis(n=10, size=10000), './result/【2.4】Хи-Квадрат Распределение/')
 
     # 【2.5】Распределение Стьюдента
-    student_t_distribution(irandom.irnstud(n=10, size=10000), './result/【2.5】Распределение Стьюдента/')
+    # student_t_distribution(irandom.irnstud(n=10, size=10000), './result/【2.5】Распределение Стьюдента/')
+
+    # 【2.6】lab3+ Распределение Вейбулла
+    arr_weibull = irandom.irnweibull(k=5, l=1, size=10000)
+    weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
+    plot_weibull_hist(arr_weibull=arr_weibull,
+                      save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
+
+
+
     pass

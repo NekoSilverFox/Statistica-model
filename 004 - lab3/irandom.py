@@ -129,7 +129,7 @@ def irngeo_3(p: float, size: int) -> np.ndarray:
 
     for i in range(size):
         i_uniform = np.random.uniform(low=0, high=1)
-        j = round(math.log(i_uniform) / math.log(1 - p)) + 1
+        j = int(math.log(i_uniform, math.e) / math.log(p, math.e) + 1)
         arr_irngeo.append(j)
 
     return np.array(arr_irngeo)
@@ -156,7 +156,7 @@ def irnpoi(mu: int, size: int) -> np.ndarray:
                 i_uniform -= p_t
                 p_t *= (mu / m)
                 m += 1
-            arr_irnpoi.append(m)
+            arr_irnpoi.append(m - 1)
         else:
             m = np.random.normal(loc=mu, scale=mu, size=1)
             arr_irnpoi.append(m)
@@ -185,7 +185,7 @@ def irnpsn(mu: int, size: int) -> np.ndarray:
                 i_uniform = np.random.uniform(low=0, high=1)
                 p_t *= i_uniform
                 m += 1
-            arr_irnpsn.append(m)
+            arr_irnpsn.append(m - 1)
         else:
             m = np.random.normal(loc=mu, scale=mu, size=1)
             arr_irnpsn.append(m)
@@ -235,7 +235,7 @@ def irnnrm_2(size: int) -> np.ndarray:
     return np.array(arr_irnnrm)
 
 
-def irnexp(beta: int, size: int) -> np.ndarray:
+def irnexp(beta: float, size: int) -> np.ndarray:
     """
     CN：指数分布
     RU：Экспоненциальное распределение
@@ -301,3 +301,51 @@ def irnstud(n: int, size: int) -> np.ndarray:
         arr_irnstud.append(var)
 
     return np.array(arr_irnstud)
+
+
+def irnweibull(k: float, l: float, size: int) -> np.ndarray:
+    """
+    CN: 韦伯分布
+    EN: Weibull distribution
+    RU: Распределение Вейбулла
+    :param k: m＞0是形状参数（shape parameter）
+    :param l: λ＞0是比例参数（scale parameter）
+    :param size: 数组大小
+    :return: 具有韦伯分布的 numpy.ndarry
+    """
+    if size <= 0 or k < 0 or l < 0:
+        raise ValueError
+
+    arr_weibull = []
+    for i in range(size):
+        x = np.random.uniform(low=0, high=1)
+        # var = m \
+        #       * (lbd ** m)\
+        #       * (x ** (m - 1))\
+        #       * (math.e ** -(lbd * x) ** m)
+        var = l ** (-1) \
+              * (-math.log(x)) ** (1 / k)
+        arr_weibull.append(var)
+
+    return np.array(arr_weibull)
+
+
+def irnrayleigh(mu: float, size: int) -> np.ndarray:
+    """
+    CN: 瑞利分布
+    EN: Rayleigh distribution
+    RU: распределения Релея
+    :param mu: 参数
+    :param size: 数组大小
+    :return: 具有瑞利分布的 numpy.ndarry
+    """
+    if size <= 0 or mu < 0:
+        raise ValueError
+
+    arr_rayleigh = []
+    for i in range(size):
+        i_uniform = np.random.uniform(low=0, high=1)
+        var = mu * math.sqrt(2 * i_uniform)
+        arr_rayleigh.append(var)
+
+    return np.array(arr_rayleigh)
