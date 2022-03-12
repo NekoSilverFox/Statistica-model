@@ -409,10 +409,16 @@ if __name__ == '__main__':
     # student_t_distribution(irandom.irnstud(n=10, size=10000), './result/【2.5】Распределение Стьюдента/')
 
     # 【2.6】lab3+ Распределение Вейбулла
-    arr_weibull = irandom.irnweibull(k=5, l=1, size=10000)
-    weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
-    plot_weibull_hist(arr_weibull=arr_weibull,
-                      save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
+    # arr_weibull = irandom.irnweibull(k=5, l=1, size=10000)
+    # weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
+    # plot_weibull_hist(arr_weibull=arr_weibull,
+    #                   save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
+
+    # 【2.6】lab3+ Распределение Рэлея
+    # arr_rayleigh = irandom.irnrayleigh(mu=1.0, size=10000)
+    # weibull_distribution(arr_rayleigh, './result/【2.6】Распределения Релея/')
+    # plot_weibull_hist(arr_weibull=arr_rayleigh,
+    #                   save_path='./result/【2.6】Распределения Релея/hist_weibull.png')
 
 
 

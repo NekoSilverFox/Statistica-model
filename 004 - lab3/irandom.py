@@ -344,8 +344,9 @@ def irnrayleigh(mu: float, size: int) -> np.ndarray:
 
     arr_rayleigh = []
     for i in range(size):
-        i_uniform = np.random.uniform(low=0, high=1)
-        var = mu * math.sqrt(2 * i_uniform)
+        i_normal = abs(irnnrm_1(size=1)[0])
+        # i_uniform = abs(np.random.normal(loc=0, scale=1, size=1)[0])
+        var = mu * math.sqrt(2 * i_normal)
         arr_rayleigh.append(var)
 
     return np.array(arr_rayleigh)
