@@ -6,6 +6,8 @@
 # @Software: PyCharm
 # @Github  ：https://github.com/NekoSilverFox
 # -----------------------------------------
+import math
+
 import st_method
 import numpy as np
 import irandom
@@ -410,27 +412,39 @@ if __name__ == '__main__':
     # student_t_distribution(irandom.irnstud(n=10, size=10000), './result/【2.5】Распределение Стьюдента/')
 
     # 【2.6】lab3+ Распределение Вейбулла
-    arr_weibull = irandom.irnweibull(k=5, l=1, size=100)  # 获取随机数组
-    arr_weibull_exp_cdf = irandom.weibull_exp_cdf(k=5, l=1, arr_exp=arr_weibull)  # 根据随机数组计算累积概率密度
-    arr_obs = np.linspace(start=0.01, stop=1, num=100)
-    df_weibull = pd.concat([pd.Series(np.sort(arr_weibull)),
-                            pd.Series(arr_obs),
-                            pd.Series(arr_weibull_exp_cdf),
-                            pd.Series(arr_obs - arr_weibull_exp_cdf)], axis=1)
-    df_weibull.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
-    df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
-    df_weibull.to_csv(path_or_buf='./result/K-S test for Weibull.csv')
-    print(df_weibull, '\n',
-          '-*-' * 20, '\n',
-          'D_n MAX = ', df_weibull['F(obs)-F(exp)'].max())
-
+    # arr_weibull = irandom.irnweibull(k=5, l=1, size=100)  # 获取随机数组
+    # arr_weibull_exp_cdf = irandom.weibull_exp_cdf(k=5, l=1, arr_exp=arr_weibull)  # 根据随机数组计算累积概率密度
+    # arr_obs = np.linspace(start=0.01, stop=1, num=100)
+    # df_weibull = pd.concat([pd.Series(np.sort(arr_weibull)),
+    #                         pd.Series(arr_obs),
+    #                         pd.Series(arr_weibull_exp_cdf),
+    #                         pd.Series(arr_obs - arr_weibull_exp_cdf)], axis=1)
+    # df_weibull.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
+    # df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
+    # df_weibull.to_csv(path_or_buf='./result/K-S test for Weibull.csv')
+    # print(df_weibull, '\n',
+    #       '-*-' * 20, '\n',
+    #       'D_n MAX = ', df_weibull['F(obs)-F(exp)'].max())
     # weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
     # plot_weibull_hist(arr_weibull=arr_weibull,
     #                   save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
 
 
     # 【2.6】lab3+ Распределение Рэлея
-    # arr_rayleigh = irandom.irnrayleigh(mu=1.0, size=10000)
+    arr_rayleigh = irandom.irnrayleigh(mu=1.0, size=100)
+    arr_rayleigh_exp_cdf = irandom.rayleigh_exp_cdf(mu=1.0, arr_exp=arr_rayleigh)  # 根据随机数组计算累积概率密度
+    arr_obs = np.linspace(start=0.01, stop=1, num=100)
+    df_rayleigh = pd.concat([pd.Series(np.sort(arr_rayleigh)),
+                             pd.Series(arr_obs),
+                             pd.Series(arr_rayleigh_exp_cdf),
+                             pd.Series(arr_obs - arr_rayleigh_exp_cdf)], axis=1)
+    df_rayleigh.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
+    df_rayleigh.columns = ['random_rayleigh', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
+    df_rayleigh.to_csv(path_or_buf='./result/K-S test for Rayleigh.csv')
+    print(df_rayleigh, '\n',
+          '-*-' * 20, '\n',
+          'D_n MAX = ', df_rayleigh['F(obs)-F(exp)'].max(), '\n',
+          '临界值 = ', 1.36 / math.sqrt(100))
     # weibull_distribution(arr_rayleigh, './result/【2.6】Распределения Релея/')
     # plot_weibull_hist(arr_weibull=arr_rayleigh,
     #                   save_path='./result/【2.6】Распределения Релея/hist_weibull.png')

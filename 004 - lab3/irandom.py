@@ -319,7 +319,6 @@ def irnweibull(k: float, l: float, size: int) -> np.ndarray:
     arr_weibull = []
     for i in range(size):
         x = np.random.uniform(low=0, high=1)
-
         var = l ** (-1) \
               * (-math.log(x)) ** (1 / k)
         arr_weibull.append(var)
@@ -332,8 +331,8 @@ def weibull_exp_cdf(k: float, l: float, arr_exp: np.ndarray) -> np.ndarray:
     返回韦伯分布概率密度分布的理论值的数组
     :param k: m＞0是形状参数（shape parameter）
     :param l: λ＞0是比例参数（scale parameter）
-    :return: 韦伯分布概率密度分布的理论值的数组
     :param arr_exp: 具有韦伯分布的数组
+    :return: 韦伯分布概率密度分布的理论值的数组
     """
     if k < 0 or l < 0:
         raise ValueError
@@ -346,10 +345,8 @@ def weibull_exp_cdf(k: float, l: float, arr_exp: np.ndarray) -> np.ndarray:
         # var = (k / l) \
         #       * ((x / l) ** (k - 1)) \
         #       * (math.e ** -((x / l) ** k))
-
         arr_weibull_exp_cdf.append(var)
         # print(var)
-
     return np.array(arr_weibull_exp_cdf)
 
 
@@ -373,3 +370,24 @@ def irnrayleigh(mu: float, size: int) -> np.ndarray:
         arr_rayleigh.append(var)
 
     return np.array(arr_rayleigh)
+
+
+def rayleigh_exp_cdf(mu: float, arr_exp: np.ndarray) -> np.ndarray:
+    """
+    返回瑞利分布概率密度分布的理论值的数组
+    :param mu: 参数
+    :param arr_exp: 具有瑞利分布的数组
+    :return: 瑞利分布概率密度分布的理论值的数组
+    """
+    if arr_exp is None or mu < 0:
+        raise ValueError
+
+    arr_exp = np.sort(arr_exp)
+    arr_rayleigh_exp_cdf = []
+
+    for x in arr_exp:
+        var = 1 - math.exp((-(x ** 2)) / (2 * (mu ** 2)))
+        arr_rayleigh_exp_cdf.append(var)
+        # print(var)
+
+    return np.array(arr_rayleigh_exp_cdf)
