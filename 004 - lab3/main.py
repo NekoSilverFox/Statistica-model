@@ -418,13 +418,14 @@ if __name__ == '__main__':
     # df_weibull = pd.concat([pd.Series(np.sort(arr_weibull)),
     #                         pd.Series(arr_obs),
     #                         pd.Series(arr_weibull_exp_cdf),
-    #                         pd.Series(arr_obs - arr_weibull_exp_cdf)], axis=1)
+    #                         pd.Series(abs(arr_obs - arr_weibull_exp_cdf))], axis=1)
     # df_weibull.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
     # df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
-    # df_weibull.to_csv(path_or_buf='./result/K-S test for Weibull.csv')
+    # df_weibull.to_csv(path_or_buf='./result/【2.6】Распределение Вейбулла/K-S test for Weibull.csv')
     # print(df_weibull, '\n',
     #       '-*-' * 20, '\n',
-    #       'D_n MAX = ', df_weibull['F(obs)-F(exp)'].max())
+    #       'D_n MAX = ', df_weibull['F(obs)-F(exp)'].max(), '\n',
+    #       'Alpha = 0.1, 临界值 = ', 1.22 / math.sqrt(100))
     # weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
     # plot_weibull_hist(arr_weibull=arr_weibull,
     #                   save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
@@ -437,14 +438,14 @@ if __name__ == '__main__':
     df_rayleigh = pd.concat([pd.Series(np.sort(arr_rayleigh)),
                              pd.Series(arr_obs),
                              pd.Series(arr_rayleigh_exp_cdf),
-                             pd.Series(arr_obs - arr_rayleigh_exp_cdf)], axis=1)
+                             pd.Series(abs(arr_obs - arr_rayleigh_exp_cdf))], axis=1)
     df_rayleigh.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
     df_rayleigh.columns = ['random_rayleigh', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
-    df_rayleigh.to_csv(path_or_buf='./result/K-S test for Rayleigh.csv')
+    df_rayleigh.to_csv(path_or_buf='./result/【2.6】Распределения Релея/K-S test for Rayleigh.csv')
     print(df_rayleigh, '\n',
           '-*-' * 20, '\n',
           'D_n MAX = ', df_rayleigh['F(obs)-F(exp)'].max(), '\n',
-          '临界值 = ', 1.36 / math.sqrt(100))
+          'Alpha = 0.05, 临界值 = ', 1.36 / math.sqrt(100))
     # weibull_distribution(arr_rayleigh, './result/【2.6】Распределения Релея/')
     # plot_weibull_hist(arr_weibull=arr_rayleigh,
     #                   save_path='./result/【2.6】Распределения Релея/hist_weibull.png')
