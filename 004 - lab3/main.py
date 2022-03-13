@@ -10,13 +10,14 @@ import st_method
 import numpy as np
 import irandom
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from scipy.stats import weibull_min
 
 TITLE_FONT_SIZE = 36
 LABEL_FONT_SIZE = 36
 TICK_FONT_SIZE = 32
 FONT = 'Times New Roman'
+
 
 def uniform_distribution():
     """
@@ -409,10 +410,21 @@ if __name__ == '__main__':
     # student_t_distribution(irandom.irnstud(n=10, size=10000), './result/【2.5】Распределение Стьюдента/')
 
     # 【2.6】lab3+ Распределение Вейбулла
-    # arr_weibull = irandom.irnweibull(k=5, l=1, size=10000)
+    arr_weibull = irandom.irnweibull(k=5, l=1, size=100)  # 获取随机数组
+    arr_weibull_exp_cdf = irandom.weibull_exp_cdf(k=5, l=1, arr_exp=arr_weibull)  # 根据随机数组计算累积概率密度
+    arr_obs = np.linspace(start=0.01, stop=1, num=100)
+    df_weibull = pd.concat([pd.DataFrame(np.sort(arr_weibull)),
+                            pd.DataFrame(arr_obs),
+                            pd.DataFrame(arr_weibull_exp_cdf),
+                            pd.DataFrame(arr_obs - arr_weibull_exp_cdf)], axis=1)
+    df_weibull.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
+    df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
+
+    print(df_weibull)
     # weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
     # plot_weibull_hist(arr_weibull=arr_weibull,
     #                   save_path='./result/【2.6】Распределение Вейбулла/hist_weibull.png')
+
 
     # 【2.6】lab3+ Распределение Рэлея
     # arr_rayleigh = irandom.irnrayleigh(mu=1.0, size=10000)

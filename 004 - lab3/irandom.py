@@ -319,15 +319,38 @@ def irnweibull(k: float, l: float, size: int) -> np.ndarray:
     arr_weibull = []
     for i in range(size):
         x = np.random.uniform(low=0, high=1)
-        # var = m \
-        #       * (lbd ** m)\
-        #       * (x ** (m - 1))\
-        #       * (math.e ** -(lbd * x) ** m)
+
         var = l ** (-1) \
               * (-math.log(x)) ** (1 / k)
         arr_weibull.append(var)
 
     return np.array(arr_weibull)
+
+
+def weibull_exp_cdf(k: float, l: float, arr_exp: np.ndarray) -> np.ndarray:
+    """
+    返回韦伯分布概率密度分布的理论值的数组
+    :param k: m＞0是形状参数（shape parameter）
+    :param l: λ＞0是比例参数（scale parameter）
+    :return: 韦伯分布概率密度分布的理论值的数组
+    :param arr_exp: 具有韦伯分布的数组
+    """
+    if k < 0 or l < 0:
+        raise ValueError
+
+    arr_exp = np.sort(arr_exp)
+    arr_weibull_exp_cdf = []
+
+    for x in arr_exp:
+        var = 1 - math.e ** -((x / l) ** k)
+        # var = (k / l) \
+        #       * ((x / l) ** (k - 1)) \
+        #       * (math.e ** -((x / l) ** k))
+
+        arr_weibull_exp_cdf.append(var)
+        # print(var)
+
+    return np.array(arr_weibull_exp_cdf)
 
 
 def irnrayleigh(mu: float, size: int) -> np.ndarray:
