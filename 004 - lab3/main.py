@@ -371,18 +371,18 @@ def weibull_distribution(arr_weibull: np.ndarray, img_save_fold: str):
     return
 
 
-def plot_weibull_hist(arr_weibull: np.ndarray, save_path: str):
+def plot_hist(arr: np.ndarray, save_path: str):
     """
     绘制直方图并保存
-    :param arr_weibull: 具有韦伯分布的数组
+    :param arr: 具有韦伯分布的数组
     :param save_path: 图像存储路径
     :return:
     """
     plt.figure(figsize=(18, 10), dpi=100)
-    plt.hist(x=arr_weibull, bins=10, density=True)
+    plt.hist(x=arr, bins=10, density=True)
     plt.grid(linestyle='--', alpha=0.5)
     plt.title('Распределение Вейбулла \n'
-              'Section=' + arr_weibull.max().__str__(),
+              'Section=' + arr.max().__str__(),
               fontdict={'family': FONT, 'size': TITLE_FONT_SIZE})
     plt.xlabel('x', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
     plt.ylabel('P(x)', fontdict={'family': FONT, 'size': LABEL_FONT_SIZE})
@@ -420,11 +420,11 @@ if __name__ == '__main__':
     #                         pd.Series(arr_weibull_exp_cdf),
     #                         pd.Series(abs(arr_obs - arr_weibull_exp_cdf))], axis=1)
     # df_weibull.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
-    # df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
+    # df_weibull.columns = ['random_weibull', 'F(obs)', 'F(exp)', '|F(obs)-F(exp)|']
     # df_weibull.to_csv(path_or_buf='./result/【2.6】Распределение Вейбулла/K-S test for Weibull.csv')
     # print(df_weibull, '\n',
     #       '-*-' * 20, '\n',
-    #       'D_n MAX = ', df_weibull['F(obs)-F(exp)'].max(), '\n',
+    #       'D_n MAX = ', df_weibull['|F(obs)-F(exp)|'].max(), '\n',
     #       'Alpha = 0.1, 临界值 = ', 1.22 / math.sqrt(100))
     # weibull_distribution(arr_weibull, './result/【2.6】Распределение Вейбулла/')
     # plot_weibull_hist(arr_weibull=arr_weibull,
@@ -440,15 +440,15 @@ if __name__ == '__main__':
                              pd.Series(arr_rayleigh_exp_cdf),
                              pd.Series(abs(arr_obs - arr_rayleigh_exp_cdf))], axis=1)
     df_rayleigh.index = np.linspace(start=1, stop=100, num=100, dtype=np.int64)
-    df_rayleigh.columns = ['random_rayleigh', 'F(obs)', 'F(exp)', 'F(obs)-F(exp)']
+    df_rayleigh.columns = ['random_rayleigh', 'F(obs)', 'F(exp)', '|F(obs)-F(exp)|']
     df_rayleigh.to_csv(path_or_buf='./result/【2.6】Распределения Релея/K-S test for Rayleigh.csv')
     print(df_rayleigh, '\n',
           '-*-' * 20, '\n',
-          'D_n MAX = ', df_rayleigh['F(obs)-F(exp)'].max(), '\n',
+          'D_n MAX = ', df_rayleigh['|F(obs)-F(exp)|'].max(), '\n',
           'Alpha = 0.05, 临界值 = ', 1.36 / math.sqrt(100))
-    # weibull_distribution(arr_rayleigh, './result/【2.6】Распределения Релея/')
-    # plot_weibull_hist(arr_weibull=arr_rayleigh,
-    #                   save_path='./result/【2.6】Распределения Релея/hist_weibull.png')
+    weibull_distribution(arr_rayleigh, './result/【2.6】Распределения Релея/')
+    plot_hist(arr=arr_rayleigh,
+              save_path='./result/【2.6】Распределения Релея/hist_weibull.png')
 
 
 
