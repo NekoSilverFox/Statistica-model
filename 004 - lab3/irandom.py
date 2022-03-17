@@ -334,7 +334,7 @@ def weibull_exp_cdf(k: float, l: float, arr_exp: np.ndarray) -> np.ndarray:
     :param arr_exp: 具有韦伯分布的数组
     :return: 韦伯分布概率密度分布的理论值的数组
     """
-    if k < 0 or l < 0:
+    if k < 0 or l < 0 or arr_exp is None:
         raise ValueError
 
     arr_exp = np.sort(arr_exp)

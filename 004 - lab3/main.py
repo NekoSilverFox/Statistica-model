@@ -1,16 +1,15 @@
 # ------*------ coding: utf-8 ------*------
 # @Time    : 2022/2/19 19:15
-# @Author  : 冰糖雪狸 (NekoSilverfox)
+# @Author  : 冰糖雪狸 (NekoSilverfox | Мэн Цзянин)
 # @Project : Statistica-model
 # @File    : main.py
 # @Software: PyCharm
 # @Github  ：https://github.com/NekoSilverFox
 # -----------------------------------------
 import math
-
 import st_method
-import numpy as np
 import irandom
+import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 

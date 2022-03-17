@@ -6,12 +6,18 @@
 # @Software: PyCharm
 # @Github  ：https://github.com/NekoSilverFox
 # -----------------------------------------
+"""
+    T_0 - наработка до первого отказа       MTBF(平均无故障时间)
+    P(t) - Вероятность безотказной работы   无故障运行的概率 P(t) = P(T_0 > t)
+    Q(t) - Вероятность отказа               故障概率 在给定的操作条件下，在给定的操作时间内至少发生一次故障的概率 Q(t) = P(T_0 < t)
+    λ(t) - Интенсивность отказов            失败率，根据统计学的定义，故障率是指在相关时间段内，故障产品的数量与正在运行的产品的平均数量的比率
 
+"""
 import random
 import math
 
 
-def func(x):
+def LFRS(x):
     T = 8760
     # return (((x[1] > T) & (x[2] > T) | (x[3] > T)) \
     #         & ((x[4] > T) & (x[5] > T)) \
@@ -46,7 +52,7 @@ def work(L):
             for j in range(0, n[i]):
                 x.append(t[j])
 
-        if not func(x):
+        if not LFRS(x):
             d = d + 1
 
     return 1 - d / N
