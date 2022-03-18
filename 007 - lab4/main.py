@@ -21,7 +21,7 @@ from scipy.stats import norm
 def LFRS(x):
     T = 8760
 
-    return (((x[0] > T) & (x[1] > T) | (x[2] > T)) \
+    return (( (x[0] > T) & (x[1] > T) | (x[2] > T)) \
             & ((x[3] > T) & (x[4] > T)) \
             & ((x[5] > T) & (x[6] > T) | (x[7] > T) & (x[8] > T) | (x[9] > T) & (x[10] > T)))
 
@@ -60,15 +60,16 @@ def work(L):
 if __name__ == '__main__':
     # ppf = norm.ppf(q=0.999, loc=0, scale=1)  # 标准正态分布的四分位数
 
-    p0 = 0.99
+    p0 = 0.999
     arr_block = [0, 0, 0]
-    for type_1 in range(0, 4):
+    num = 9
+    for type_1 in range(1, num):
         arr_block[0] = type_1
 
-        for type_2 in range(0, 3):
+        for type_2 in range(1, num):
             arr_block[1] = type_2
 
-            for type_3 in range(0, 7):
+            for type_3 in range(1, num):
                 arr_block[2] = type_3
                 p_broken = work(arr_block)
 
