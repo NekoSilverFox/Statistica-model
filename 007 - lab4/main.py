@@ -24,8 +24,9 @@ def LFRS(x: list) -> bool:
     :param x: 包含对应零件正常运行时长的 list
     :return: bool
     """
-    T = 8760
+    T = 8760  # 系统正常运行的小时数
 
+    # ЛФРС системы
     return (( (x[0] > T) & (x[1] > T) | (x[2] > T)) \
             & ((x[3] > T) & (x[4] > T)) \
             & ((x[5] > T) & (x[6] > T) | (x[7] > T) & (x[8] > T) | (x[9] > T) & (x[10] > T)))
@@ -69,29 +70,45 @@ def start_test(arr_L: list) -> float:
 
 if __name__ == '__main__':
     # ppf = norm.ppf(q=0.999, loc=0, scale=1)  # 标准正态分布的四分位数
+    while True:
+        print('>' * 100)
+        str_res = '>' * 100 + '\n'
 
-    p0 = 0.999  # 系统运行指定时长的概率
-    arr_block = [0, 0, 0]
-    min_part = 3  # 每种零件的最小零件数
-    max_part = 9  # 每种零件的最大零件数
-    res_p = 0.0  # 存储结果中的最小值
-    res_arr_part = []  # 存储结果中的零件数量
+        p0 = 0.999  # 系统运行指定时长且不损坏的概率
+        arr_block = [0, 0, 0]
+        min_part = 3  # 每种零件的最小零件数
+        max_part = 9  # 每种零件的最大零件数
+        res_p = 1.0  # 存储结果中的最小值
+        res_arr_part = [max_part, max_part, max_part]  # 存储结果中的零件数量
 
-    for type_1 in range(min_part, max_part):
-        arr_block[0] = type_1
+        for num_type_1 in range(min_part, max_part):
+            arr_block[0] = num_type_1
 
-        for type_2 in range(min_part, max_part):
-            arr_block[1] = type_2
+            for num_type_2 in range(min_part, max_part):
+                arr_block[1] = num_type_2
 
-            for type_3 in range(min_part, max_part):
-                arr_block[2] = type_3
-                p_broken = start_test(arr_block)
+                for num_type_3 in range(min_part, max_part):
+                    arr_block[2] = num_type_3
+                    p_broken = start_test(arr_block)
 
-                if p_broken > p0:
-                    res_p = p_broken
-                    res_arr_part = arr_block
-                    print('\033[32mP = ', p_broken, "  ", arr_block, "   ", sum(arr_block), '+\033[0m')
-                else:
-                    print("P = ", p_broken, "  ", arr_block, "   ", sum(arr_block))
+                    # 调用、存储、输出
+                    str = f'P = {p_broken}\t{arr_block}\t{sum(arr_block)}\n'
+                    str_res += str
+                    if p_broken > p0:
+                        if sum(arr_block) < sum(res_arr_part):
+                            res_p = p_broken
+                            res_arr_part = arr_block[:]
+                        # print('\033[32mP = ', p_broken, "  ", arr_block, "   ", sum(arr_block), '+\033[0m')
 
-    print('\033[32m\n最优结果为：\nP = ', res_p, "  ", res_arr_part, "   ", sum(res_arr_part), '\033[0m')
+                    else:
+                        pass
+                        # print("P = ", p_broken, "  ", arr_block, "   ", sum(arr_block))
+
+        str_res += f'\n最优结果为：\nP = {res_p}\t{res_arr_part}\t{sum(res_arr_part)}\n'
+        print('\033[32m\n最优结果为：\nP = ', res_p, "  ", res_arr_part, "   ", sum(res_arr_part), '\n\033[0m')
+
+        if sum(res_arr_part) < 15:
+            # print(str_res)
+            with open('out.txt', 'w+') as f:  # 设置文件对象
+                f.write(str_res)  # 将字符串写入文件中
+            break
